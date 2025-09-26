@@ -25,7 +25,6 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import Image from 'next/image';
 import {
   Menu as MenuIcon,
   Phone,
@@ -408,11 +407,9 @@ const Header: React.FC = () => {
                   }
                 }}
               >
-                <Image
+                <img
                   src="/logo.png"
                   alt="Nobel World Records Logo"
-                  width={280}
-                  height={80}
                   style={{
                     objectFit: 'contain',
                     filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1))',
