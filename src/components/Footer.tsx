@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import {
   Facebook,
-  Twitter,
   Instagram,
   LinkedIn,
   YouTube,
@@ -23,10 +22,35 @@ import {
   LocationOn,
   ArrowUpward,
 } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
 
 const Footer: React.FC = () => {
+  const router = useRouter();
+  
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleQuickLinkClick = (link: string) => {
+    switch (link) {
+      case 'About NWR':
+        router.push('/about');
+        break;
+      case 'Records':
+        router.push('/records');
+        break;
+      case 'Invite a Judge':
+        router.push('/records/invite');
+        break;
+      case 'Apply for Judge':
+        router.push('/records/judge');
+        break;
+      case 'Contact Us':
+        router.push('/contact');
+        break;
+      default:
+        break;
+    }
   };
 
   const officeLocations = [
@@ -73,17 +97,24 @@ const Footer: React.FC = () => {
     'Records',
     'Invite a Judge',
     'Apply for Judge',
-    'Products',
-    'News',
+    'Contact Us',
   ];
 
   const socialIcons = [
-    { icon: Facebook, color: '#1877F2' },
-    { icon: Twitter, color: '#1DA1F2' },
-    { icon: Instagram, color: '#E4405F' },
-    { icon: LinkedIn, color: '#0077B5' },
-    { icon: YouTube, color: '#FF0000' },
-    { icon: Pinterest, color: '#BD081C' },
+    { icon: Facebook, color: '#1877F2', url: 'https://www.facebook.com/nobelworldrecords' },
+    { 
+      icon: () => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      ), 
+      color: '#1DA1F2', 
+      url: 'https://x.com/nobel_records/' 
+    },
+    { icon: Instagram, color: '#E4405F', url: 'https://www.instagram.com/nobelworldrecords' },
+    { icon: LinkedIn, color: '#0077B5', url: 'https://www.linkedin.com/in/nobel-world-records-b566341a4/' },
+    { icon: YouTube, color: '#FF0000', url: 'https://www.youtube.com/@nobelworldrecords' },
+    { icon: Pinterest, color: '#BD081C', url: 'https://www.pinterest.com/nobelworldrecords' },
   ];
 
   return (
@@ -101,10 +132,16 @@ const Footer: React.FC = () => {
                 <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                   <Typography sx={{ mr: 1, color: '#FF6B35' }}>→</Typography>
                   <Link
-                    href="#"
+                    component="button"
+                    onClick={() => handleQuickLinkClick(link)}
                     sx={{
                       color: 'white',
                       textDecoration: 'none',
+                      cursor: 'pointer',
+                      background: 'none',
+                      border: 'none',
+                      padding: 0,
+                      font: 'inherit',
                       '&:hover': { color: '#FF6B35' },
                     }}
                   >
@@ -123,6 +160,7 @@ const Footer: React.FC = () => {
                 {socialIcons.map((social, index) => (
                   <IconButton
                     key={index}
+                    onClick={() => window.open(social.url, '_blank')}
                     sx={{
                       backgroundColor: social.color,
                       color: 'white',

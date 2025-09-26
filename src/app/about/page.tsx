@@ -11,7 +11,6 @@ import {
   Paper,
 } from '@mui/material';
 import {
-  Star,
   Public,
   Business,
   School,
@@ -143,7 +142,8 @@ const About: React.FC = () => {
       <Box
         sx={{
           backgroundColor: '#FFFFFF',
-          py: 2,
+          py: { xs: 4, md: 2 }, // Increased mobile padding
+          pt: { xs: 6, md: 2 }, // Extra top padding for mobile
           position: 'relative',
         }}
       >

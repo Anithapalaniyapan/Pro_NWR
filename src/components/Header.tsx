@@ -32,7 +32,6 @@ import {
   Email,
   Search,
   Close,
-  Language,
   ExpandMore,
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
@@ -41,8 +40,6 @@ const Header: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [languageAnchor, setLanguageAnchor] = useState<null | HTMLElement>(null);
-  const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [isNavigating, setIsNavigating] = useState(false);
   const [recordsAnchor, setRecordsAnchor] = useState<null | HTMLElement>(null);
   const theme = useTheme();
@@ -82,13 +79,6 @@ const Header: React.FC = () => {
     }
   };
 
-  const handleLanguageClick = (event: React.MouseEvent<HTMLElement>) => {
-    setLanguageAnchor(event.currentTarget);
-  };
-
-  const handleLanguageClose = () => {
-    setLanguageAnchor(null);
-  };
 
   const handleRecordsClick = (event: React.MouseEvent<HTMLElement>) => {
     setRecordsAnchor(event.currentTarget);
@@ -98,12 +88,6 @@ const Header: React.FC = () => {
     setRecordsAnchor(null);
   };
 
-  const handleLanguageSelect = (language: string) => {
-    setSelectedLanguage(language);
-    setLanguageAnchor(null);
-    // Here you can implement actual language change functionality
-    alert(`Language changed to: ${language}`);
-  };
 
   const handleNavigation = (href: string) => {
     // Close mobile drawer if open
@@ -130,19 +114,8 @@ const Header: React.FC = () => {
     }
   };
 
-  const languages = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'hi', name: 'Hindi', flag: '🇮🇳' },
-    { code: 'es', name: 'Spanish', flag: '🇪🇸' },
-    { code: 'fr', name: 'French', flag: '🇫🇷' },
-    { code: 'de', name: 'German', flag: '🇩🇪' },
-    { code: 'zh', name: 'Chinese', flag: '🇨🇳' },
-    { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
-    { code: 'ar', name: 'Arabic', flag: '🇸🇦' },
-  ];
 
   const navigationItems = [
-    { label: 'Translator', href: '#', isTranslator: true },
     { label: 'Home', href: '/' },
     { label: 'About Us', href: '/about' },
     { label: 'Records', href: '/records', hasDropdown: true },
@@ -150,9 +123,10 @@ const Header: React.FC = () => {
   ];
 
   const recordsDropdownItems = [
-    { label: 'Apply To Set/Break A Records', href: '/records#nomination-forms' },
-    { label: 'Apply For Judge', href: '/records#apply-judge' },
-    { label: 'Invite A Judge', href: '/records#invite-judge' },
+    { label: 'Records', href: '/records' },
+    { label: 'Apply To Set/Break A Records', href: '/records/apply' },
+    { label: 'Apply For Judge', href: '/records/judge' },
+    { label: 'Invite A Judge', href: '/records/invite' },
   ];
 
   const drawer = (
@@ -191,33 +165,7 @@ const Header: React.FC = () => {
       <List sx={{ flex: 1, py: 2 }}>
         {navigationItems.map((item) => (
           <ListItem key={item.label} disablePadding>
-            {item.isTranslator ? (
-              <ListItemButton 
-                sx={{ 
-                  textAlign: 'left',
-                  color: '#1976D2',
-                  py: 2,
-                  px: 3,
-                  mx: 1,
-                  borderRadius: 2,
-                  '&:hover': {
-                    backgroundColor: '#E3F2FD',
-                    color: '#1565C0',
-                  }
-                }}
-                onClick={handleLanguageClick}
-              >
-                <Language sx={{ mr: 2, fontSize: 24 }} />
-                <ListItemText 
-                  primary={item.label} 
-                  primaryTypographyProps={{
-                    fontSize: '1.1rem',
-                    fontWeight: 600,
-                  }}
-                />
-                <ExpandMore sx={{ ml: 1, fontSize: 20 }} />
-              </ListItemButton>
-            ) : item.hasDropdown ? (
+            {item.hasDropdown ? (
               <Box>
                 <ListItemButton 
                   onClick={handleRecordsClick}
@@ -428,6 +376,7 @@ const Header: React.FC = () => {
           borderBottom: '1px solid rgba(255, 107, 53, 0.1)',
           top: { xs: '40px', md: '60px' }, // Responsive top position
           transition: 'all 0.3s ease',
+          py: { xs: 2, md: 0 }, // Add vertical padding for mobile
           '&:hover': {
             background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.98) 100%)',
             boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)',
@@ -478,44 +427,6 @@ const Header: React.FC = () => {
              {!isMobile && (
                <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
                  {navigationItems.map((item) => {
-                   if (item.isTranslator) {
-                     return (
-                     <Button
-                       key={item.label}
-                       onClick={handleLanguageClick}
-                       sx={{
-                         color: '#1976D2',
-                         backgroundColor: 'rgba(25, 118, 210, 0.08)',
-                         borderRadius: 3,
-                         px: 3,
-                         py: 1.5,
-                         fontWeight: 600,
-                         fontSize: '0.95rem',
-                         textTransform: 'none',
-                         border: '2px solid rgba(25, 118, 210, 0.2)',
-                         boxShadow: '0 4px 15px rgba(25, 118, 210, 0.1)',
-                         position: 'relative',
-                         overflow: 'hidden',
-                         '&:hover': {
-                           backgroundColor: 'rgba(25, 118, 210, 0.15)',
-                           color: '#1565C0',
-                           borderColor: '#1976D2',
-                           transform: 'translateY(-2px)',
-                           boxShadow: '0 8px 25px rgba(25, 118, 210, 0.2)',
-                         },
-                         '&:active': {
-                           transform: 'translateY(0px)',
-                         },
-                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                       }}
-                     >
-                       <Language sx={{ mr: 1, fontSize: 20 }} />
-                       {item.label}
-                       <ExpandMore sx={{ ml: 1, fontSize: 18 }} />
-                     </Button>
-                     );
-                   }
-                   
                    if (item.hasDropdown) {
                      return (
                        <Button
@@ -714,7 +625,7 @@ const Header: React.FC = () => {
           alignItems: 'center',
           pb: 1,
         }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#1976D2' }}>
+          <Typography component="span" sx={{ fontWeight: 'bold', color: '#1976D2', fontSize: '1.25rem' }}>
             Search Nobel World Records
           </Typography>
           <IconButton onClick={handleSearchClose} size="small">
@@ -812,50 +723,7 @@ const Header: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Language Dropdown Menu */}
-      <Menu
-        anchorEl={languageAnchor}
-        open={Boolean(languageAnchor)}
-        onClose={handleLanguageClose}
-        sx={{
-          '& .MuiPaper-root': {
-            borderRadius: 2,
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
-            border: '1px solid #E0E0E0',
-            mt: 1,
-          },
-        }}
-      >
-        {languages.map((language) => (
-          <MenuItem
-            key={language.code}
-            onClick={() => handleLanguageSelect(language.name)}
-            sx={{
-              py: 1.5,
-              px: 2,
-              '&:hover': {
-                backgroundColor: '#F5F5F5',
-              },
-              '&.Mui-selected': {
-                backgroundColor: '#E3F2FD',
-                color: '#1976D2',
-              },
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Typography sx={{ fontSize: '1.2rem' }}>{language.flag}</Typography>
-              <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                {language.name}
-              </Typography>
-              {selectedLanguage === language.name && (
-                <Typography sx={{ color: '#1976D2', fontSize: '0.8rem' }}>
-                  ✓
-                </Typography>
-              )}
-            </Box>
-          </MenuItem>
-        ))}
-      </Menu>
+
     </>
   );
 };

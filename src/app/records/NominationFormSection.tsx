@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Container,
@@ -8,10 +8,15 @@ import {
   Card,
   CardContent,
   Button,
+  Snackbar,
+  Alert,
+  Slide,
 } from '@mui/material';
-import { Download, Description } from '@mui/icons-material';
+import { Download, Description, CheckCircleOutline } from '@mui/icons-material';
 
 const NominationFormSection: React.FC = () => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [downloadedForm, setDownloadedForm] = useState('');
   const forms = [
     {
       title: 'NWR Record Nomination Form',
@@ -55,6 +60,11 @@ const NominationFormSection: React.FC = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      
+      // Show success alert
+      setDownloadedForm(title);
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 5000);
     } catch (error) {
       console.error('Error downloading PDF:', error);
       // Fallback: open in new tab
@@ -240,6 +250,94 @@ const NominationFormSection: React.FC = () => {
           ))}
         </Box>
       </Container>
+
+      {/* Beautiful Download Success Alert */}
+      <Snackbar
+        open={showAlert}
+        autoHideDuration={5000}
+        onClose={() => setShowAlert(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        TransitionComponent={Slide}
+        TransitionProps={{ direction: 'down' } as React.ComponentProps<typeof Slide>}
+        sx={{
+          '& .MuiSnackbarContent-root': {
+            padding: 0,
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+          }
+        }}
+      >
+        <Alert
+          severity="success"
+          icon={<CheckCircleOutline sx={{ fontSize: { xs: 24, sm: 28, md: 32 } }} />}
+          onClose={() => setShowAlert(false)}
+          sx={{
+            background: 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)',
+            color: 'white',
+            borderRadius: { xs: 2, sm: 3, md: 4 },
+            boxShadow: '0 12px 40px rgba(76, 175, 80, 0.4)',
+            border: 'none',
+            width: { xs: '90%', sm: '85%', md: 'auto' },
+            minWidth: { xs: 280, sm: 350, md: 450 },
+            maxWidth: { xs: 400, sm: 450, md: 500 },
+            padding: { xs: '12px 16px', sm: '14px 18px', md: '16px 20px' },
+            mx: { xs: 'auto', sm: 'auto', md: 0 },
+            '& .MuiAlert-icon': {
+              color: 'white',
+              fontSize: { xs: 24, sm: 28, md: 32 },
+              marginRight: { xs: 1.5, sm: 1.8, md: 2 },
+            },
+            '& .MuiAlert-message': {
+              fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem' },
+              fontWeight: 'bold',
+              padding: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: { xs: 0.3, sm: 0.5, md: 1 },
+            },
+            '& .MuiAlert-action': {
+              color: 'white',
+              marginLeft: { xs: 1, sm: 1.5, md: 2 },
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                borderRadius: '50%',
+              },
+            },
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+              borderRadius: { xs: 2, sm: 3, md: 4 },
+              zIndex: -1,
+            },
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: { xs: 0.3, sm: 0.4, md: 0.5 } }}>
+            <Typography sx={{ 
+              fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' }, 
+              fontWeight: 'bold', 
+              color: 'white',
+              lineHeight: 1.2,
+            }}>
+              🎉 Download Successful!
+            </Typography>
+            <Typography sx={{ 
+              fontSize: { xs: '0.8rem', sm: '0.85rem', md: '0.9rem' }, 
+              color: 'rgba(255,255,255,0.9)', 
+              fontWeight: 400,
+              lineHeight: 1.4,
+            }}>
+              {downloadedForm} has been downloaded successfully. 
+              Please complete all sections and submit your nomination.
+            </Typography>
+          </Box>
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

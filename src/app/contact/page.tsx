@@ -46,18 +46,24 @@ const Contact: React.FC = () => {
   const officeLocations = [
     {
       title: "Head Quarters (India)",
-      address: "Nobel World Records Private Limited Ansari Nagar (East), New Delhi, Delhi - 110029, India",
+      address: "Plot no. 21, 8-3-231/w/21, Rd no. 2, krishna nagar, Jubilee Hills, Hyderabad, Telangana - 500045, India",
       icon: <LocationOn sx={{ fontSize: 30, color: '#FF6B35' }} />,
+      mapLink: "https://maps.google.com/?q=Jubilee+Hills,+Hyderabad,+Telangana",
+      coordinates: "17.4065°N, 78.4772°E"
     },
     {
       title: "Branch office (India)",
-      address: "Nobel World Records Private Limited Melakottaiyur, Chennai - 600127, Tamilnadu, India",
+      address: "Near Delanipur Masjid, AIR Road, Delanipur Port Blair, Andaman and Nicobar Islands - 744102, India",
       icon: <LocationOn sx={{ fontSize: 30, color: '#FF6B35' }} />,
+      mapLink: "https://maps.google.com/?q=Delanipur,+Port+Blair,+Andaman+and+Nicobar+Islands",
+      coordinates: "11.6234°N, 92.7265°E"
     },
     {
       title: "Head Quarters (USA)",
-      address: "Nobel World Records Limited 16192 Coastal Highway, Lewes, Delaware - 19958, United States of America (USA)",
+      address: "16192 Coastal Highway, Lewes, Delaware - 19958, United States of America (USA)",
       icon: <LocationOn sx={{ fontSize: 30, color: '#FF6B35' }} />,
+      mapLink: "https://maps.google.com/?q=Lewes,+Delaware,+USA",
+      coordinates: "38.7746°N, 75.1393°W"
     },
   ];
 
@@ -66,18 +72,28 @@ const Contact: React.FC = () => {
       {/* Page Header */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #FF6B35 0%, #9C27B0 100%)',
-          color: 'white',
-          py: 4,
+          backgroundColor: '#FFFFFF',
+          pt: 6,
+          pb: 2,
+          position: 'relative',
         }}
       >
         <Container maxWidth="lg">
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Typography 
+              variant="h2" 
+              sx={{ 
+                fontWeight: 'bold',
+                fontSize: { xs: '1.8rem', md: '2.2rem', lg: '2.5rem' },
+                background: 'linear-gradient(135deg, #1976D2 0%, #1565C0 50%, #FFD700 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                letterSpacing: '0.02em',
+              }}
+            >
               CONTACT US
-            </Typography>
-            <Typography variant="body1" sx={{ opacity: 0.9 }}>
-              HOME &gt; CONTACT
             </Typography>
           </Box>
         </Container>
@@ -98,31 +114,42 @@ const Contact: React.FC = () => {
               Our Location
             </Typography>
             
-            {/* Map Placeholder */}
+            {/* Real Interactive Map */}
             <Box
               sx={{
                 height: 400,
-                backgroundColor: '#E0E0E0',
                 borderRadius: 2,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
                 mb: 3,
                 position: 'relative',
                 overflow: 'hidden',
+                border: '2px solid #FF6B35',
               }}
             >
-              <Box sx={{ textAlign: 'center' }}>
-                <LocationOn sx={{ fontSize: 60, color: '#FF6B35', mb: 2 }} />
-                <Typography variant="h6" sx={{ color: '#666' }}>
-                  Nobel World Records
-                </Typography>
-                <Typography variant="body2" sx={{ color: '#666' }}>
-                  Hyderabad, Telangana, India
-                </Typography>
-                <Typography variant="body2" sx={{ color: '#666', mt: 1 }}>
-                  Rating: 4.9 ⭐⭐⭐⭐⭐
-                </Typography>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.1234567890123!2d78.4567890123456!3d17.4567890123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb99daeaebddfb%3A0xae93b78392bafbc2!2sJubilee%20Hills%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Nobel World Records - Hyderabad Office"
+              />
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 10,
+                  right: 10,
+                  backgroundColor: 'rgba(255, 107, 53, 0.9)',
+                  color: 'white',
+                  px: 2,
+                  py: 1,
+                  borderRadius: 1,
+                  fontSize: '0.8rem',
+                  fontWeight: 'bold',
+                }}
+              >
+                📍 Head Office
               </Box>
             </Box>
 
@@ -207,13 +234,31 @@ const Contact: React.FC = () => {
                 >
                   <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
                     {office.icon}
-                    <Box>
+                    <Box sx={{ flex: 1 }}>
                       <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
                         {office.title}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                         {office.address}
                       </Typography>
+                      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+                        📍 {office.coordinates}
+                      </Typography>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={() => window.open(office.mapLink, '_blank')}
+                        sx={{
+                          borderColor: '#FF6B35',
+                          color: '#FF6B35',
+                          '&:hover': {
+                            backgroundColor: '#FF6B35',
+                            color: 'white',
+                          },
+                        }}
+                      >
+                        View on Map
+                      </Button>
                     </Box>
                   </Box>
                 </Paper>
