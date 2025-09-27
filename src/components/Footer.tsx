@@ -111,7 +111,7 @@ const Footer: React.FC = () => {
       color: '#1DA1F2', 
       url: 'https://x.com/nobel_records/' 
     },
-    { icon: Instagram, color: '#E4405F', url: 'https://www.instagram.com/nobelworldrecords' },
+    { icon: Instagram, color: '#E4405F', url: 'https://www.instagram.com/nobel_world_records' },
     { icon: LinkedIn, color: '#0077B5', url: 'https://www.linkedin.com/in/nobel-world-records-b566341a4/' },
     { icon: YouTube, color: '#FF0000', url: 'https://www.youtube.com/@nobelworldrecords' },
     { icon: Pinterest, color: '#BD081C', url: 'https://www.pinterest.com/nobelworldrecords' },
