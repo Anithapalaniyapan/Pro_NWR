@@ -500,9 +500,11 @@ const About: React.FC = () => {
             sx={{ 
               position: 'relative',
               mx: 'auto',
-              maxWidth: { xs: '320px', sm: '500px', md: '800px' },
-              height: { xs: '450px', sm: '500px', md: '600px' },
+              width: '100%',
+              maxWidth: { xs: '100%', sm: '500px', md: '800px' },
+              height: { xs: '400px', sm: '500px', md: '600px' },
               perspective: { xs: '800px', sm: '1000px' },
+              overflow: 'hidden',
               '&:hover .carousel-container': {
                 animationPlayState: 'paused',
               },
@@ -536,8 +538,16 @@ const About: React.FC = () => {
                       transform: isActive 
                         ? 'translate(-50%, -50%) translateZ(0px) scale(1)'
                         : isPrev 
-                        ? 'translate(-50%, -50%) translateX(-150px) translateZ(-80px) scale(0.7)'
-                        : 'translate(-50%, -50%) translateX(150px) translateZ(-80px) scale(0.7)',
+                        ? { 
+                            xs: 'translate(-50%, -50%) translateX(-80px) translateZ(-80px) scale(0.6)',
+                            sm: 'translate(-50%, -50%) translateX(-100px) translateZ(-80px) scale(0.7)',
+                            md: 'translate(-50%, -50%) translateX(-120px) translateZ(-80px) scale(0.7)'
+                          }
+                        : { 
+                            xs: 'translate(-50%, -50%) translateX(80px) translateZ(-80px) scale(0.6)',
+                            sm: 'translate(-50%, -50%) translateX(100px) translateZ(-80px) scale(0.7)',
+                            md: 'translate(-50%, -50%) translateX(120px) translateZ(-80px) scale(0.7)'
+                          },
                       opacity: isActive ? 1 : 0.6,
                       filter: isActive ? 'none' : 'blur(2px)',
                       transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -550,8 +560,9 @@ const About: React.FC = () => {
                       sx={{
                         p: { xs: 3, sm: 4, md: 5 },
                         textAlign: 'center',
-                        height: { xs: '350px', sm: '400px', md: '500px' },
-                        width: { xs: '250px', sm: '300px', md: '400px' },
+                        height: { xs: '320px', sm: '400px', md: '500px' },
+                        width: { xs: '220px', sm: '300px', md: '400px' },
+                        maxWidth: { xs: '90vw', sm: '300px', md: '400px' },
                         borderRadius: { xs: 3, sm: 4, md: 5 },
                         backgroundColor: '#FFFFFF',
                         border: isActive ? '3px solid #1976D2' : '2px solid #E3F2FD',
