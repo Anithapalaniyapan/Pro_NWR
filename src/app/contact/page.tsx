@@ -15,7 +15,6 @@ import {
   Email,
   LocationOn,
   Send,
-  WhatsApp,
 } from '@mui/icons-material';
 import Layout from '../../components/Layout';
 
@@ -418,31 +417,6 @@ const Contact: React.FC = () => {
         </Container>
       </Box>
 
-      {/* WhatsApp Floating Button */}
-      <Box
-        sx={{
-          position: 'fixed',
-          bottom: 20,
-          right: 20,
-          zIndex: 1000,
-        }}
-      >
-        <IconButton
-          sx={{
-            backgroundColor: '#25D366',
-            color: 'white',
-            width: 60,
-            height: 60,
-            '&:hover': {
-              backgroundColor: '#128C7E',
-              transform: 'scale(1.1)',
-            },
-            transition: 'all 0.3s ease',
-          }}
-        >
-          <WhatsApp sx={{ fontSize: 30 }} />
-        </IconButton>
-      </Box>
     </Layout>
   );
 };
